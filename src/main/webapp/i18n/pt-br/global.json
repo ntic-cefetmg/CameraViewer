@@ -128,5 +128,7 @@
         "emailexists": "Este email já está cadastrado!",
         "idexists": "Novo(a) {{entityName}} não pode ter uma ID"
     },
-    "footer": "Este é o seu rodapé"
+    "footer": "2017 - NTIC",
+    "githubrep": "Repositório no GitHub",
+    "cefetmg": "CEFETMG"
 }
