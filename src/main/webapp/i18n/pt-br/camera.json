@@ -2,22 +2,22 @@
     "cameraViewerApp": {
         "camera" : {
             "home": {
-                "title": "Cameras",
-                "createLabel": "Criar novo Camera",
-                "createOrEditLabel": "Criar ou editar Camera"
+                "title": "Câmeras",
+                "createLabel": "Criar nova Câmera",
+                "createOrEditLabel": "Criar ou editar Câmera"
             },
-            "created": "Um novo Camera foi criado com o identificador {{ param }}",
-            "updated": "Um Camera foi atualizado com o identificador {{ param }}",
-            "deleted": "Um Camera foi deletado com o identificador {{ param }}",
+            "created": "Uma nova Câmera foi criada com o identificador {{ param }}",
+            "updated": "Um Câmera foi atualizada com o identificador {{ param }}",
+            "deleted": "Um Câmera foi deletada com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Camera {{ id }}?"
+                "question": "Tem certeza de que deseja excluir a Câmera {{ id }}?"
             },
             "detail": {
-                "title": "Camera"
+                "title": "Câmera"
             },
-            "description": "Description",
-            "accessURL": "Access URL",
-            "usersWithAccess": "Users With Access"
+            "description": "Descrição",
+            "accessURL": "Endereço de acesso",
+            "usersWithAccess": "Usuários com acesso"
         }
     }
 }
