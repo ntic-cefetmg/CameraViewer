@@ -1,0 +1,8 @@
+entity Camera {
+	description String required,
+    accessURL String required
+}
+
+relationship ManyToMany {
+	Camera{usersWithAccess(login)} to User
+}
