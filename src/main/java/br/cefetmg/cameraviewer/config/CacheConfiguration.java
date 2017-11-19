@@ -43,6 +43,9 @@ public class CacheConfiguration {
             cm.createCache(br.cefetmg.cameraviewer.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(br.cefetmg.cameraviewer.domain.Camera.class.getName(), jcacheConfiguration);
             cm.createCache(br.cefetmg.cameraviewer.domain.Camera.class.getName() + ".usersWithAccesses", jcacheConfiguration);
+            cm.createCache(br.cefetmg.cameraviewer.domain.Screen.class.getName(), jcacheConfiguration);
+            cm.createCache(br.cefetmg.cameraviewer.domain.Screen.class.getName() + ".cameras", jcacheConfiguration);
+            cm.createCache(br.cefetmg.cameraviewer.domain.Screen.class.getName() + ".usersWithAccesses", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

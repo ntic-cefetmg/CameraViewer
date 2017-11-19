@@ -3,6 +3,15 @@ entity Camera {
     accessURL String required
 }
 
+entity Screen {
+	description String required
+}
+
 relationship ManyToMany {
 	Camera{usersWithAccess(login)} to User
+}
+
+relationship ManyToMany {
+	Screen{cameras(description)} to Camera,
+	Screen{usersWithAccess(login)} to User
 }

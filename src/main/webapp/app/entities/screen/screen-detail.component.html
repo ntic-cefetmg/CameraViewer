@@ -1,0 +1,37 @@
+
+<div *ngIf="screen">
+    <h2><span jhiTranslate="cameraViewerApp.screen.detail.title">Screen</span> {{screen.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="cameraViewerApp.screen.description">Description</span></dt>
+        <dd>
+            <span>{{screen.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="cameraViewerApp.screen.cameras">Cameras</span></dt>
+        <dd>
+            <span *ngFor="let cameras of screen.cameras; let last = last">
+                <a [routerLink]="['/camera', cameras?.id ]">{{cameras.description}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span jhiTranslate="cameraViewerApp.screen.usersWithAccess">Users With Access</span></dt>
+        <dd>
+            <span *ngFor="let usersWithAccess of screen.usersWithAccesses; let last = last">
+                {{usersWithAccess.login}}{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'screen/'+ screen.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
