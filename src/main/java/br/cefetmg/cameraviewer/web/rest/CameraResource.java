@@ -1,5 +1,9 @@
 package br.cefetmg.cameraviewer.web.rest;
 
+import br.cefetmg.cameraviewer.domain.UserPermission;
+import br.cefetmg.cameraviewer.repository.UserPermissionRepository;
+import br.cefetmg.cameraviewer.security.AuthoritiesConstants;
+import br.cefetmg.cameraviewer.security.SecurityUtils;
 import com.codahale.metrics.annotation.Timed;
 import br.cefetmg.cameraviewer.domain.Camera;
 
@@ -10,12 +14,15 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,9 +38,11 @@ public class CameraResource {
     private static final String ENTITY_NAME = "camera";
 
     private final CameraRepository cameraRepository;
+    private final UserPermissionRepository userPermissionRepository;
 
-    public CameraResource(CameraRepository cameraRepository) {
+    public CameraResource(CameraRepository cameraRepository, UserPermissionRepository userPermissionRepository) {
         this.cameraRepository = cameraRepository;
+        this.userPermissionRepository = userPermissionRepository;
     }
 
     /**
@@ -45,6 +54,7 @@ public class CameraResource {
      */
     @PostMapping("/cameras")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Camera> createCamera(@Valid @RequestBody Camera camera) throws URISyntaxException {
         log.debug("REST request to save Camera : {}", camera);
         if (camera.getId() != null) {
@@ -67,6 +77,7 @@ public class CameraResource {
      */
     @PutMapping("/cameras")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Camera> updateCamera(@Valid @RequestBody Camera camera) throws URISyntaxException {
         log.debug("REST request to update Camera : {}", camera);
         if (camera.getId() == null) {
@@ -87,7 +98,18 @@ public class CameraResource {
     @Timed
     public List<Camera> getAllCameras() {
         log.debug("REST request to get all Cameras");
-        return cameraRepository.findAll();
+        if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return cameraRepository.findAll();
+        List<Camera> cameras = new ArrayList<>();
+        cameraRepository.findAll().forEach(camera -> {
+            userPermissionRepository.findAllWithEagerRelationships().forEach(userPermission -> {
+                if(userPermission.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){
+                    userPermission.getCamerasThatHaveAccesses().forEach(accessCamera -> {
+                        if(accessCamera.equals(camera)) cameras.add(camera);
+                    });
+                }
+            });
+        });
+        return cameras;
         }
 
     /**
@@ -101,7 +123,15 @@ public class CameraResource {
     public ResponseEntity<Camera> getCamera(@PathVariable Long id) {
         log.debug("REST request to get Camera : {}", id);
         Camera camera = cameraRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(camera));
+        if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return ResponseUtil.wrapOrNotFound(Optional.ofNullable(camera));
+        for(UserPermission userPermission : userPermissionRepository.findAllWithEagerRelationships()){
+            if(userPermission.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){
+                for(Camera accessCamera : userPermission.getCamerasThatHaveAccesses()){
+                    if(accessCamera.equals(camera)) return ResponseUtil.wrapOrNotFound(Optional.ofNullable(camera));
+                }
+            }
+        }
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(null));
     }
 
     /**
@@ -112,6 +142,7 @@ public class CameraResource {
      */
     @DeleteMapping("/cameras/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteCamera(@PathVariable Long id) {
         log.debug("REST request to delete Camera : {}", id);
         cameraRepository.delete(id);

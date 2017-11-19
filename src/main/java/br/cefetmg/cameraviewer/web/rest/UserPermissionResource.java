@@ -1,5 +1,6 @@
 package br.cefetmg.cameraviewer.web.rest;
 
+import br.cefetmg.cameraviewer.security.AuthoritiesConstants;
 import com.codahale.metrics.annotation.Timed;
 import br.cefetmg.cameraviewer.domain.UserPermission;
 
@@ -10,6 +11,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -44,6 +46,7 @@ public class UserPermissionResource {
      */
     @PostMapping("/user-permissions")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<UserPermission> createUserPermission(@RequestBody UserPermission userPermission) throws URISyntaxException {
         log.debug("REST request to save UserPermission : {}", userPermission);
         if (userPermission.getId() != null) {
@@ -66,6 +69,7 @@ public class UserPermissionResource {
      */
     @PutMapping("/user-permissions")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<UserPermission> updateUserPermission(@RequestBody UserPermission userPermission) throws URISyntaxException {
         log.debug("REST request to update UserPermission : {}", userPermission);
         if (userPermission.getId() == null) {
@@ -84,6 +88,7 @@ public class UserPermissionResource {
      */
     @GetMapping("/user-permissions")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public List<UserPermission> getAllUserPermissions() {
         log.debug("REST request to get all UserPermissions");
         return userPermissionRepository.findAllWithEagerRelationships();
@@ -97,6 +102,7 @@ public class UserPermissionResource {
      */
     @GetMapping("/user-permissions/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<UserPermission> getUserPermission(@PathVariable Long id) {
         log.debug("REST request to get UserPermission : {}", id);
         UserPermission userPermission = userPermissionRepository.findOneWithEagerRelationships(id);
@@ -111,6 +117,7 @@ public class UserPermissionResource {
      */
     @DeleteMapping("/user-permissions/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteUserPermission(@PathVariable Long id) {
         log.debug("REST request to delete UserPermission : {}", id);
         userPermissionRepository.delete(id);

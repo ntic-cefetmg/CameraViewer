@@ -1,5 +1,6 @@
 package br.cefetmg.cameraviewer.web.rest;
 
+import br.cefetmg.cameraviewer.security.AuthoritiesConstants;
 import com.codahale.metrics.annotation.Timed;
 import br.cefetmg.cameraviewer.domain.Screen;
 
@@ -10,6 +11,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -45,6 +47,7 @@ public class ScreenResource {
      */
     @PostMapping("/screens")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Screen> createScreen(@Valid @RequestBody Screen screen) throws URISyntaxException {
         log.debug("REST request to save Screen : {}", screen);
         if (screen.getId() != null) {
@@ -67,6 +70,7 @@ public class ScreenResource {
      */
     @PutMapping("/screens")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Screen> updateScreen(@Valid @RequestBody Screen screen) throws URISyntaxException {
         log.debug("REST request to update Screen : {}", screen);
         if (screen.getId() == null) {
@@ -112,6 +116,7 @@ public class ScreenResource {
      */
     @DeleteMapping("/screens/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteScreen(@PathVariable Long id) {
         log.debug("REST request to delete Screen : {}", id);
         screenRepository.delete(id);
