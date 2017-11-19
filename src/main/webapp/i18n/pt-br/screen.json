@@ -2,21 +2,21 @@
     "cameraViewerApp": {
         "screen" : {
             "home": {
-                "title": "Screens",
-                "createLabel": "Criar novo Screen",
-                "createOrEditLabel": "Criar ou editar Screen"
+                "title": "Telas",
+                "createLabel": "Criar nova Tela",
+                "createOrEditLabel": "Criar ou editar Tela"
             },
-            "created": "Um novo Screen foi criado com o identificador {{ param }}",
-            "updated": "Um Screen foi atualizado com o identificador {{ param }}",
-            "deleted": "Um Screen foi deletado com o identificador {{ param }}",
+            "created": "Uma nova Tela foi criada com o identificador {{ param }}",
+            "updated": "Uma Tela foi atualizada com o identificador {{ param }}",
+            "deleted": "Uma Tela foi deletada com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Screen {{ id }}?"
+                "question": "Tem certeza de que deseja excluir a Tela {{ id }}?"
             },
             "detail": {
-                "title": "Screen"
+                "title": "Tela"
             },
-            "description": "Description",
-            "cameras": "Cameras"
+            "description": "Descrição",
+            "cameras": "Câmeras"
         }
     }
 }

@@ -2,21 +2,21 @@
     "cameraViewerApp": {
         "userPermission" : {
             "home": {
-                "title": "User Permissions",
-                "createLabel": "Criar novo User Permission",
-                "createOrEditLabel": "Criar ou editar User Permission"
+                "title": "Permissões dos usuários",
+                "createLabel": "Criar nova Permissão",
+                "createOrEditLabel": "Criar ou editar Permissão"
             },
-            "created": "Um novo User Permission foi criado com o identificador {{ param }}",
-            "updated": "Um User Permission foi atualizado com o identificador {{ param }}",
-            "deleted": "Um User Permission foi deletado com o identificador {{ param }}",
+            "created": "Uma nova Permissão foi criado com o identificador {{ param }}",
+            "updated": "Uma Permissão foi atualizado com o identificador {{ param }}",
+            "deleted": "Uma Permissão foi deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir User Permission {{ id }}?"
+                "question": "Tem certeza de que deseja excluir as Permissões de usuário {{ id }}?"
             },
             "detail": {
-                "title": "User Permission"
+                "title": "Permissões dos usuários"
             },
-            "user": "User",
-            "camerasThatHaveAccess": "Cameras That Have Access"
+            "user": "Usuário",
+            "camerasThatHaveAccess": "Câmeras que tem acesso"
         }
     }
 }
