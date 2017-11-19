@@ -1,0 +1,23 @@
+{
+    "cameraViewerApp": {
+        "camera" : {
+            "home": {
+                "title": "Cameras",
+                "createLabel": "Criar novo Camera",
+                "createOrEditLabel": "Criar ou editar Camera"
+            },
+            "created": "Um novo Camera foi criado com o identificador {{ param }}",
+            "updated": "Um Camera foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Camera foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Camera {{ id }}?"
+            },
+            "detail": {
+                "title": "Camera"
+            },
+            "description": "Description",
+            "accessURL": "Access URL",
+            "usersWithAccess": "Users With Access"
+        }
+    }
+}

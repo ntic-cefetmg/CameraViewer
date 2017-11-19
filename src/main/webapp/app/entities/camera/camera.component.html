@@ -1,0 +1,58 @@
+<div>
+    <h2>
+        <span jhiTranslate="cameraViewerApp.camera.home.title">Cameras</span>
+        <button class="btn btn-primary float-right jh-create-entity create-camera" [routerLink]="['/', { outlets: { popup: ['camera-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="cameraViewerApp.camera.home.createLabel">
+            Create new Camera
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="cameras">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="cameraViewerApp.camera.description">Description</span></th>
+            <th><span jhiTranslate="cameraViewerApp.camera.accessURL">Access URL</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let camera of cameras ;trackBy: trackId">
+                <td><a [routerLink]="['../camera', camera.id ]">{{camera.id}}</a></td>
+                <td>{{camera.description}}</td>
+                <td>{{camera.accessURL}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../camera', camera.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'camera/'+ camera.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'camera/'+ camera.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

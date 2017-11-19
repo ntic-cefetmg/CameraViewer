@@ -1,0 +1,22 @@
+{
+    "cameraViewerApp": {
+        "screen" : {
+            "home": {
+                "title": "Screens",
+                "createLabel": "Criar novo Screen",
+                "createOrEditLabel": "Criar ou editar Screen"
+            },
+            "created": "Um novo Screen foi criado com o identificador {{ param }}",
+            "updated": "Um Screen foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Screen foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Screen {{ id }}?"
+            },
+            "detail": {
+                "title": "Screen"
+            },
+            "description": "Description",
+            "cameras": "Cameras"
+        }
+    }
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity UserPermission.
+    -->
+    <changeSet id="20171119115836-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_permission"
+                                 constraintName="fk_user_permission_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_permissions_id"
+                                 baseTableName="user_permission_cameras_that_have_access"
+                                 constraintName="fk_user_permission_cameras_that_have_access_user_permissions_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_permission"/>
+        <addForeignKeyConstraint baseColumnNames="cameras_that_have_accesses_id"
+                                 baseTableName="user_permission_cameras_that_have_access"
+                                 constraintName="user_permission_cameras_that_ha_cameras_that_have_accesses_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="camera"/>
+        
+    </changeSet>
+</databaseChangeLog>
