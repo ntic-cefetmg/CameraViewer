@@ -4,6 +4,7 @@ import br.cefetmg.cameraviewer.CameraViewerApp;
 
 import br.cefetmg.cameraviewer.domain.Screen;
 import br.cefetmg.cameraviewer.repository.ScreenRepository;
+import br.cefetmg.cameraviewer.repository.UserPermissionRepository;
 import br.cefetmg.cameraviewer.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class ScreenResourceIntTest {
     private ScreenRepository screenRepository;
 
     @Autowired
+    private UserPermissionRepository userPermissionRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class ScreenResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ScreenResource screenResource = new ScreenResource(screenRepository);
+        final ScreenResource screenResource = new ScreenResource(screenRepository, userPermissionRepository);
         this.restScreenMockMvc = MockMvcBuilders.standaloneSetup(screenResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

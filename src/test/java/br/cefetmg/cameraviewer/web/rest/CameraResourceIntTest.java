@@ -4,6 +4,7 @@ import br.cefetmg.cameraviewer.CameraViewerApp;
 
 import br.cefetmg.cameraviewer.domain.Camera;
 import br.cefetmg.cameraviewer.repository.CameraRepository;
+import br.cefetmg.cameraviewer.repository.UserPermissionRepository;
 import br.cefetmg.cameraviewer.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -48,6 +49,9 @@ public class CameraResourceIntTest {
     private CameraRepository cameraRepository;
 
     @Autowired
+    private UserPermissionRepository userPermissionRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -66,7 +70,7 @@ public class CameraResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CameraResource cameraResource = new CameraResource(cameraRepository);
+        final CameraResource cameraResource = new CameraResource(cameraRepository, userPermissionRepository);
         this.restCameraMockMvc = MockMvcBuilders.standaloneSetup(cameraResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
