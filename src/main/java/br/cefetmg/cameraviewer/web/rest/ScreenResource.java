@@ -1,6 +1,10 @@
 package br.cefetmg.cameraviewer.web.rest;
 
+import br.cefetmg.cameraviewer.domain.Camera;
+import br.cefetmg.cameraviewer.domain.UserPermission;
+import br.cefetmg.cameraviewer.repository.UserPermissionRepository;
 import br.cefetmg.cameraviewer.security.AuthoritiesConstants;
+import br.cefetmg.cameraviewer.security.SecurityUtils;
 import com.codahale.metrics.annotation.Timed;
 import br.cefetmg.cameraviewer.domain.Screen;
 
@@ -18,6 +22,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,9 +38,11 @@ public class ScreenResource {
     private static final String ENTITY_NAME = "screen";
 
     private final ScreenRepository screenRepository;
+    private final UserPermissionRepository userPermissionRepository;
 
-    public ScreenResource(ScreenRepository screenRepository) {
+    public ScreenResource(ScreenRepository screenRepository, UserPermissionRepository userPermissionRepository) {
         this.screenRepository = screenRepository;
+        this.userPermissionRepository = userPermissionRepository;
     }
 
     /**
@@ -91,7 +98,28 @@ public class ScreenResource {
     @Timed
     public List<Screen> getAllScreens() {
         log.debug("REST request to get all Screens");
-        return screenRepository.findAllWithEagerRelationships();
+        if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return screenRepository.findAllWithEagerRelationships();
+        List<Screen> screens = new ArrayList<>();
+        for(Screen screen : screenRepository.findAllWithEagerRelationships()){
+            boolean addScreen = true;
+            for(Camera camera : screen.getCameras()){
+                boolean userHasPermission = false;
+                for(UserPermission userPermission : userPermissionRepository.findAllWithEagerRelationships()){
+                    if(userPermission.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){
+                        for(Camera accessCamera : userPermission.getCamerasThatHaveAccesses()){
+                            if(accessCamera.equals(camera)) {
+                                userHasPermission = true;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                if(!userHasPermission) addScreen = false;
+            }
+            if(addScreen) screens.add(screen);
+        }
+        return screens;
         }
 
     /**
@@ -105,6 +133,22 @@ public class ScreenResource {
     public ResponseEntity<Screen> getScreen(@PathVariable Long id) {
         log.debug("REST request to get Screen : {}", id);
         Screen screen = screenRepository.findOneWithEagerRelationships(id);
+        if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return ResponseUtil.wrapOrNotFound(Optional.ofNullable(null));
+            for(Camera camera : screen.getCameras()){
+            boolean userHasPermission = false;
+            for(UserPermission userPermission : userPermissionRepository.findAllWithEagerRelationships()){
+                if(userPermission.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){
+                    for(Camera accessCamera : userPermission.getCamerasThatHaveAccesses()){
+                        if(accessCamera.equals(camera)) {
+                            userHasPermission = true;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            if(!userHasPermission) return ResponseUtil.wrapOrNotFound(Optional.ofNullable(null));
+        }
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(screen));
     }
 
