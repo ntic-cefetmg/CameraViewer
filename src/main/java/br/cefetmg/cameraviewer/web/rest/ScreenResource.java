@@ -98,8 +98,11 @@ public class ScreenResource {
     @Timed
     public List<Screen> getAllScreens() {
         log.debug("REST request to get all Screens");
+        // If the user is an admin, return all the screens
         if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return screenRepository.findAllWithEagerRelationships();
         List<Screen> screens = new ArrayList<>();
+        // Create a list for each screen checking if the user has permission to see all the cameras, if he does, add the screen
+        // Note to fix the code below in the future to a more effective
         for(Screen screen : screenRepository.findAllWithEagerRelationships()){
             boolean addScreen = true;
             for(Camera camera : screen.getCameras()){
@@ -133,8 +136,10 @@ public class ScreenResource {
     public ResponseEntity<Screen> getScreen(@PathVariable Long id) {
         log.debug("REST request to get Screen : {}", id);
         Screen screen = screenRepository.findOneWithEagerRelationships(id);
+        // If the user is an admin, return the found Screen
         if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return ResponseUtil.wrapOrNotFound(Optional.ofNullable(null));
-            for(Camera camera : screen.getCameras()){
+        // Check if the user has permission to see all the cameras in the found screen
+        for(Camera camera : screen.getCameras()){
             boolean userHasPermission = false;
             for(UserPermission userPermission : userPermissionRepository.findAllWithEagerRelationships()){
                 if(userPermission.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){
@@ -147,8 +152,10 @@ public class ScreenResource {
                     break;
                 }
             }
+            // In case the user isn't allowed to see one of the cameras, return not found
             if(!userHasPermission) return ResponseUtil.wrapOrNotFound(Optional.ofNullable(null));
         }
+        // Return the screen
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(screen));
     }
 

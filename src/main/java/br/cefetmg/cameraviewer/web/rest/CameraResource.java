@@ -98,8 +98,10 @@ public class CameraResource {
     @Timed
     public List<Camera> getAllCameras() {
         log.debug("REST request to get all Cameras");
+        // If the user is an admin, return all the cameras
         if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return cameraRepository.findAll();
         List<Camera> cameras = new ArrayList<>();
+        // For each camera, check if the user has permission to see it, if he does, add the camera to the final camera list
         cameraRepository.findAll().forEach(camera -> {
             userPermissionRepository.findAllWithEagerRelationships().forEach(userPermission -> {
                 if(userPermission.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){
@@ -123,7 +125,11 @@ public class CameraResource {
     public ResponseEntity<Camera> getCamera(@PathVariable Long id) {
         log.debug("REST request to get Camera : {}", id);
         Camera camera = cameraRepository.findOne(id);
+        // If the user is an admin, return the camera
         if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return ResponseUtil.wrapOrNotFound(Optional.ofNullable(camera));
+        // For each User Permission, check if the logged user has access to the returned camera, return it if he does
+        // There is probably a better way of doing this, but since it's a very limited amount of data (Not expected more than 100 cameras), this is acceptable
+        // Here stays a note to fix it in the future with a more effective way
         for(UserPermission userPermission : userPermissionRepository.findAllWithEagerRelationships()){
             if(userPermission.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){
                 for(Camera accessCamera : userPermission.getCamerasThatHaveAccesses()){
@@ -131,6 +137,7 @@ public class CameraResource {
                 }
             }
         }
+        // In case the user has no permission, return not found
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(null));
     }
 
