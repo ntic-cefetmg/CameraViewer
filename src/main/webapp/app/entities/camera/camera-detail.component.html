@@ -8,11 +8,10 @@
         <dd>
             <span>{{camera.description}}</span>
         </dd>
-        <dt><span jhiTranslate="cameraViewerApp.camera.accessURL">Access URL</span></dt>
-        <dd>
-            <span>{{camera.accessURL}}</span>
-        </dd>
+        <img id="stream" [src]="camera.accessURL" width="800" height="600" border="0" [alt]="camera.description">
     </dl>
+
+
 
     <button type="submit"
             (click)="previousState()"
@@ -20,7 +19,7 @@
         <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
     </button>
 
-    <button type="button"
+    <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button"
             [routerLink]="['/', { outlets: { popup: 'camera/'+ camera.id + '/edit'} }]"
             replaceUrl="true"
             class="btn btn-primary">

@@ -18,7 +18,6 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="cameraViewerApp.camera.description">Description</span></th>
-            <th *jhiHasAnyAuthority="'ROLE_ADMIN'"><span jhiTranslate="cameraViewerApp.camera.accessURL">Access URL</span></th>
             <th></th>
             </tr>
             </thead>
@@ -26,7 +25,6 @@
             <tr *ngFor="let camera of cameras ;trackBy: trackId">
                 <td><a [routerLink]="['../camera', camera.id ]">{{camera.id}}</a></td>
                 <td>{{camera.description}}</td>
-                <td *jhiHasAnyAuthority="'ROLE_ADMIN'">{{camera.accessURL}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
