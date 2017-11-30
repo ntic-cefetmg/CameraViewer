@@ -74,6 +74,7 @@ var MjpegProxy = exports.MjpegProxy = function(mjpegUrl) {
         method: 'GET',
         json: true
       }, function (err, resp, body) {
+        if (err) { return console.log(err); }
         if(resp.statusCode == 200) self.mjpegOptions = url.parse(body.accessURL);
         else self.mjpegOptions = url.parse(mjpegUrl+req.params.id);
 

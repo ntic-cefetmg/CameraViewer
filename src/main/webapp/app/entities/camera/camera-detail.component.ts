@@ -5,6 +5,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { Camera } from './camera.model';
 import { CameraService } from './camera.service';
+import { AuthServerProvider } from '../../shared/auth/auth-jwt.service';
 
 @Component({
     selector: 'jhi-camera-detail',
@@ -19,6 +20,7 @@ export class CameraDetailComponent implements OnInit, OnDestroy {
     constructor(
         private eventManager: JhiEventManager,
         private cameraService: CameraService,
+        private authServerProvider: AuthServerProvider,
         private route: ActivatedRoute
     ) {
     }
@@ -33,6 +35,7 @@ export class CameraDetailComponent implements OnInit, OnDestroy {
     load(id) {
         this.cameraService.find(id).subscribe((camera) => {
             this.camera = camera;
+            this.camera.accessURL = "http://"+window.location.hostname+":8000/"+this.camera.id+"/"+this.authServerProvider.getToken();
         });
     }
     previousState() {
