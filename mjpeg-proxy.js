@@ -63,14 +63,25 @@ var MjpegProxy = exports.MjpegProxy = function(mjpegUrl) {
 
     // There is already another client consuming the MJPEG response
     if (self.mjpegRequest !== null) {
-      self._newClient(req, res);
+      request({
+        headers: {
+          'Authorization': "Bearer "+req.params.auth
+        },
+        uri: mjpegUrl,
+        method: 'GET',
+        json: true
+      }, function (err, resp, body) {
+        if (err) { return console.log(err); }
+        if(resp.statusCode == 200) self._newClient(req, res);
+        else res.end();
+      });
     } else {
       // Send source MJPEG request
       request({
         headers: {
           'Authorization': "Bearer "+req.params.auth
         },
-        uri: mjpegUrl+req.params.id,
+        uri: mjpegUrl,
         method: 'GET',
         json: true
       }, function (err, resp, body) {
@@ -169,7 +180,12 @@ var MjpegProxy = exports.MjpegProxy = function(mjpegUrl) {
 
 var HTTP_PORT = 8000;
 
-app.get('/:id/:auth',  new MjpegProxy("http://localhost:8080/api/cameras/").proxyRequest);
+// For temporário - TODO: Atualizar para um request que recupera as câmeras cadastradas
+for(var i=1; i<1000; i++){
+  app.get('/'+i+'/:auth',  new MjpegProxy("http://localhost:8080/api/cameras/"+i).proxyRequest);
+}
+
+
 
 app.listen(HTTP_PORT);
 
