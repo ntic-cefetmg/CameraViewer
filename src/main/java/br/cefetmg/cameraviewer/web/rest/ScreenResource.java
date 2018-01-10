@@ -106,6 +106,7 @@ public class ScreenResource {
         for(Screen screen : screenRepository.findAllWithEagerRelationships()){
             boolean addScreen = true;
             for(Camera camera : screen.getCameras()){
+                camera.setAccessURL("N/A");
                 boolean userHasPermission = false;
                 for(UserPermission userPermission : userPermissionRepository.findAllWithEagerRelationships()){
                     if(userPermission.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){
@@ -140,6 +141,7 @@ public class ScreenResource {
         if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return ResponseUtil.wrapOrNotFound(Optional.ofNullable(null));
         // Check if the user has permission to see all the cameras in the found screen
         for(Camera camera : screen.getCameras()){
+            camera.setAccessURL("N/A");
             boolean userHasPermission = false;
             for(UserPermission userPermission : userPermissionRepository.findAllWithEagerRelationships()){
                 if(userPermission.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){

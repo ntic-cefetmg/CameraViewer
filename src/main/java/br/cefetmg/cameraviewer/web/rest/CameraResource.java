@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -96,7 +97,7 @@ public class CameraResource {
      */
     @GetMapping("/cameras")
     @Timed
-    public List<Camera> getAllCameras() {
+    public List<Camera> getAllCameras(HttpServletRequest request) {
         log.debug("REST request to get all Cameras");
         // If the user is an admin, return all the cameras
         if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return cameraRepository.findAll();
@@ -106,6 +107,7 @@ public class CameraResource {
             userPermissionRepository.findAllWithEagerRelationships().forEach(userPermission -> {
                 if(userPermission.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){
                     userPermission.getCamerasThatHaveAccesses().forEach(accessCamera -> {
+                        if(!request.getRemoteAddr().equals("0:0:0:0:0:0:0:1")) camera.setAccessURL("N/A");
                         if(accessCamera.equals(camera)) cameras.add(camera);
                     });
                 }
@@ -122,7 +124,7 @@ public class CameraResource {
      */
     @GetMapping("/cameras/{id}")
     @Timed
-    public ResponseEntity<Camera> getCamera(@PathVariable Long id) {
+    public ResponseEntity<Camera> getCamera(@PathVariable Long id, HttpServletRequest request) {
         log.debug("REST request to get Camera : {}", id);
         Camera camera = cameraRepository.findOne(id);
         // If the user is an admin, return the camera
@@ -130,6 +132,7 @@ public class CameraResource {
         // For each User Permission, check if the logged user has access to the returned camera, return it if he does
         // There is probably a better way of doing this, but since it's a very limited amount of data (Not expected more than 100 cameras), this is acceptable
         // Here stays a note to fix it in the future with a more effective way
+        if(!request.getRemoteAddr().equals("0:0:0:0:0:0:0:1")) camera.setAccessURL("N/A");
         for(UserPermission userPermission : userPermissionRepository.findAllWithEagerRelationships()){
             if(userPermission.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){
                 for(Camera accessCamera : userPermission.getCamerasThatHaveAccesses()){
