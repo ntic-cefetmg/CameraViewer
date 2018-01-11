@@ -138,7 +138,7 @@ public class ScreenResource {
         log.debug("REST request to get Screen : {}", id);
         Screen screen = screenRepository.findOneWithEagerRelationships(id);
         // If the user is an admin, return the found Screen
-        if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return ResponseUtil.wrapOrNotFound(Optional.ofNullable(null));
+        if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return ResponseUtil.wrapOrNotFound(Optional.ofNullable(screen));
         // Check if the user has permission to see all the cameras in the found screen
         for(Camera camera : screen.getCameras()){
             camera.setAccessURL("N/A");
