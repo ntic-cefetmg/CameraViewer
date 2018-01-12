@@ -17,7 +17,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "camera")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Camera implements Serializable {
+public class Camera implements Serializable, Comparable<Camera> {
 
     private static final long serialVersionUID = 1L;
 
@@ -98,6 +98,11 @@ public class Camera implements Serializable {
         this.usersWithAccesses = userPermissions;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    @Override
+    public int compareTo(Camera c){
+        return this.getDescription().compareTo(c.getDescription());
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -28,6 +28,7 @@ public class UserPermission implements Serializable {
     private User user;
 
     @ManyToMany
+    @OrderBy(value="description")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "user_permission_cameras_that_have_access",
                joinColumns = @JoinColumn(name="user_permissions_id", referencedColumnName="id"),

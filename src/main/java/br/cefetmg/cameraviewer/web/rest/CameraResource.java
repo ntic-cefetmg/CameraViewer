@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Collections;
 
 /**
  * REST controller for managing Camera.
@@ -99,11 +100,13 @@ public class CameraResource {
     @Timed
     public List<Camera> getAllCameras(HttpServletRequest request) {
         log.debug("REST request to get all Cameras");
+        List<Camera> allCameras = cameraRepository.findAll();
+        Collections.sort(allCameras);
         // If the user is an admin, return all the cameras
-        if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return cameraRepository.findAll();
+        if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) return allCameras;
         List<Camera> cameras = new ArrayList<>();
         // For each camera, check if the user has permission to see it, if he does, add the camera to the final camera list
-        cameraRepository.findAll().forEach(camera -> {
+        allCameras.forEach(camera -> {
             userPermissionRepository.findAllWithEagerRelationships().forEach(userPermission -> {
                 if(userPermission.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){
                     userPermission.getCamerasThatHaveAccesses().forEach(accessCamera -> {

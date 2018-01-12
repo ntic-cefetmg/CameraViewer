@@ -29,6 +29,7 @@ public class Screen implements Serializable {
     private String description;
 
     @ManyToMany
+    @OrderBy(value="description")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "screen_cameras",
                joinColumns = @JoinColumn(name="screens_id", referencedColumnName="id"),
