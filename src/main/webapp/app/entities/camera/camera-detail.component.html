@@ -1,17 +1,11 @@
 
 <div *ngIf="camera">
-    <h2><span jhiTranslate="cameraViewerApp.camera.detail.title">Camera</span> {{camera.id}}</h2>
+    <h2>{{camera.description}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="cameraViewerApp.camera.description">Description</span></dt>
-        <dd>
-            <span>{{camera.description}}</span>
-        </dd>
         <img id="stream" class="img-fluid" [src]="camera.accessURL" width="800" height="600" border="0" [alt]="camera.description">
     </dl>
-
-
 
     <button type="submit"
             (click)="previousState()"
