@@ -1,10 +1,10 @@
-import { BaseEntity } from './../../shared';
+import { Camera } from './../camera';
 
-export class Screen implements BaseEntity {
+export class Screen implements Camera {
     constructor(
         public id?: number,
         public description?: string,
-        public cameras?: BaseEntity[],
+        public cameras?: Camera[],
     ) {
     }
 }

@@ -1,13 +1,15 @@
 
 <div *ngIf="screen">
-    <h2><span jhiTranslate="cameraViewerApp.screen.detail.title">Screen</span> {{screen.id}}</h2>
+    <h2>{{screen.description}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="cameraViewerApp.screen.description">Description</span></dt>
-        <dd>
-            <span>{{screen.description}}</span>
-        </dd>
+        <div class="row" [ngClass]="generalClass">
+            <div [ngClass]="cameraClass" *ngFor="let camera of screen.cameras">
+                <img class="img-fluid camera-img" [src]="camera.accessURL" border="0" [alt]="camera.description">
+            </div>
+        </div>
+        
         <dt><span jhiTranslate="cameraViewerApp.screen.cameras">Cameras</span></dt>
         <dd>
             <span *ngFor="let cameras of screen.cameras; let last = last">
