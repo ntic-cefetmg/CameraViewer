@@ -40,13 +40,17 @@ export class ScreenDetailComponent implements OnInit, OnDestroy {
             for(var i=0; i<this.screen.cameras.length; i++){
                 this.screen.cameras[i].accessURL = "http://"+window.location.hostname+":8000/"+this.screen.cameras[i].id+"/"+this.authServerProvider.getToken();
             }
-            if(this.screen.cameras.length == 4 || this.screen.cameras.length == 2){
+            if(this.screen.cameras.length == 1){
+                this.generalClass = "col-xs-12";
+                this.cameraClass = "col-xs-12";
+                
+            } else if(this.screen.cameras.length == 4 || this.screen.cameras.length == 2){
                 this.generalClass = "col-sm-8";
                 this.cameraClass = "col-sm-6";
-            } else if(this.screen.cameras.length == 3 || this.screen.cameras.length == 6){
+            } else if(this.screen.cameras.length == 3 || this.screen.cameras.length == 6 || this.screen.cameras.length == 5){
                 this.generalClass = "col-xs-12";
                 this.cameraClass = "col-sm-4";
-            } else if(this.screen.cameras.length == 9){
+            } else if(this.screen.cameras.length == 9 || this.screen.cameras.length == 7 || this.screen.cameras.length == 8){
                 this.generalClass = "col-sm-8";
                 this.cameraClass = "col-sm-4";
             }
