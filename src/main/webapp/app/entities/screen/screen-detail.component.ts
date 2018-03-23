@@ -18,6 +18,7 @@ export class ScreenDetailComponent implements OnInit, OnDestroy {
     cameraClass: string;
     private subscription: Subscription;
     private eventSubscriber: Subscription;
+    private cameraImages: HTMLImageElement[];
 
     constructor(
         private eventManager: JhiEventManager,
@@ -38,7 +39,7 @@ export class ScreenDetailComponent implements OnInit, OnDestroy {
         this.screenService.find(id).subscribe((screen) => {
             this.screen = screen;
             for(var i=0; i<this.screen.cameras.length; i++){
-                this.screen.cameras[i].accessURL = "http://"+window.location.hostname+":8000/"+this.screen.cameras[i].id+"/"+this.authServerProvider.getToken();
+                this.screen.cameras[i].accessURL = "http://"+window.location.hostname+":"+(4200+i)+"/?camera="+this.screen.cameras[i].id+"&auth="+this.authServerProvider.getToken();
             }
             if(this.screen.cameras.length == 1){
                 this.generalClass = "col-xs-12";
@@ -54,8 +55,22 @@ export class ScreenDetailComponent implements OnInit, OnDestroy {
                 this.generalClass = "col-sm-8";
                 this.cameraClass = "col-sm-4";
             }
+            setInterval(this.verifyImages, 10000);
         });
     }
+
+    verifyImages(){
+        var elements = document.getElementsByClassName("camera-img");
+        this.cameraImages = [];
+        for(var i=0; i < elements.length; i++){
+            this.cameraImages.push(elements[i] as HTMLImageElement);
+            if(!this.cameraImages[i].complete || this.cameraImages[i].naturalWidth == 0){
+                this.cameraImages[i].src = this.cameraImages[i].src + '&time=2';
+            }
+            //console.log("Câmera "+i+": "+this.cameraImages[i].complete);
+        }
+    }
+    
     previousState() {
         window.history.back();
     }
