@@ -35,7 +35,7 @@ export class CameraDetailComponent implements OnInit, OnDestroy {
     load(id) {
         this.cameraService.find(id).subscribe((camera) => {
             this.camera = camera;
-            this.camera.accessURL = "http://"+window.location.hostname+":4200/?camera="+this.camera.id+"&auth="+this.authServerProvider.getToken();
+            this.camera.accessURL = 'http://' + window.location.hostname + ':4200/?camera=' + this.camera.id + '&auth=' + this.authServerProvider.getToken();
         });
     }
     previousState() {

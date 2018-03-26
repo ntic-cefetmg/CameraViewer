@@ -9,7 +9,7 @@
                 <img class="img-fluid camera-img" [src]="camera.accessURL" border="0" [alt]="camera.description">
             </div>
         </div>
-        
+
         <dt><span jhiTranslate="cameraViewerApp.screen.cameras">Cameras</span></dt>
         <dd>
             <span *ngFor="let cameras of screen.cameras; let last = last">
@@ -24,7 +24,8 @@
         <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
     </button>
 
-    <button type="button"
+    <button *jhiHasAnyAuthority="'ROLE_ADMIN'"
+            type="button"
             [routerLink]="['/', { outlets: { popup: 'screen/'+ screen.id + '/edit'} }]"
             replaceUrl="true"
             class="btn btn-primary">

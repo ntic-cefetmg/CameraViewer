@@ -8,6 +8,8 @@ import { CameraViewerTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
 import { ScreenDetailComponent } from '../../../../../../main/webapp/app/entities/screen/screen-detail.component';
 import { ScreenService } from '../../../../../../main/webapp/app/entities/screen/screen.service';
+import { AuthServerProvider } from '../../../../../../main/webapp/app/shared/auth/auth-jwt.service';
+import { LocalStorageService, SessionStorageService } from 'ng2-webstorage';
 import { Screen } from '../../../../../../main/webapp/app/entities/screen/screen.model';
 
 describe('Component Tests', () => {
@@ -16,6 +18,7 @@ describe('Component Tests', () => {
         let comp: ScreenDetailComponent;
         let fixture: ComponentFixture<ScreenDetailComponent>;
         let service: ScreenService;
+        let authServerProvider: AuthServerProvider;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
@@ -30,6 +33,9 @@ describe('Component Tests', () => {
                         useValue: new MockActivatedRoute({id: 123})
                     },
                     ScreenService,
+                    AuthServerProvider,
+                    LocalStorageService,
+                    SessionStorageService,
                     JhiEventManager
                 ]
             }).overrideTemplate(ScreenDetailComponent, '')

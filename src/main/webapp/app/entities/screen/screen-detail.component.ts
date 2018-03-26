@@ -38,39 +38,41 @@ export class ScreenDetailComponent implements OnInit, OnDestroy {
     load(id) {
         this.screenService.find(id).subscribe((screen) => {
             this.screen = screen;
-            for(var i=0; i<this.screen.cameras.length; i++){
-                this.screen.cameras[i].accessURL = "http://"+window.location.hostname+":"+(4200+i)+"/?camera="+this.screen.cameras[i].id+"&auth="+this.authServerProvider.getToken();
-            }
-            if(this.screen.cameras.length == 1){
-                this.generalClass = "col-xs-12";
-                this.cameraClass = "col-xs-12";
-                
-            } else if(this.screen.cameras.length == 4 || this.screen.cameras.length == 2){
-                this.generalClass = "col-sm-8";
-                this.cameraClass = "col-sm-6";
-            } else if(this.screen.cameras.length == 3 || this.screen.cameras.length == 6 || this.screen.cameras.length == 5){
-                this.generalClass = "col-xs-12";
-                this.cameraClass = "col-sm-4";
-            } else if(this.screen.cameras.length == 9 || this.screen.cameras.length == 7 || this.screen.cameras.length == 8){
-                this.generalClass = "col-sm-8";
-                this.cameraClass = "col-sm-4";
+            if (this.screen.cameras) {
+                for (let i = 0; i < this.screen.cameras.length; i++) {
+                    this.screen.cameras[i].accessURL = 'http://' + window.location.hostname + ':' + (4200 + i) + '/?camera='
+                    + this.screen.cameras[i].id + '&auth=' + this.authServerProvider.getToken();
+                }
+                if (this.screen.cameras.length === 1) {
+                    this.generalClass = 'col-xs-12';
+                    this.cameraClass = 'col-xs-12';
+    
+                } else if (this.screen.cameras.length === 4 || this.screen.cameras.length === 2) {
+                    this.generalClass = 'col-sm-8';
+                    this.cameraClass = 'col-sm-6';
+                } else if (this.screen.cameras.length === 3 || this.screen.cameras.length === 6 || this.screen.cameras.length === 5) {
+                    this.generalClass = 'col-xs-12';
+                    this.cameraClass = 'col-sm-4';
+                } else if (this.screen.cameras.length === 9 || this.screen.cameras.length === 7 || this.screen.cameras.length === 8) {
+                    this.generalClass = 'col-sm-8';
+                    this.cameraClass = 'col-sm-4';
+                }
             }
             setInterval(this.verifyImages, 10000);
         });
     }
 
-    verifyImages(){
-        var elements = document.getElementsByClassName("camera-img");
+    verifyImages() {
+        const elements = document.getElementsByClassName('camera-img');
         this.cameraImages = [];
-        for(var i=0; i < elements.length; i++){
+        for (let i = 0; i < elements.length; i++) {
             this.cameraImages.push(elements[i] as HTMLImageElement);
-            if(!this.cameraImages[i].complete || this.cameraImages[i].naturalWidth == 0){
+            if (!this.cameraImages[i].complete || this.cameraImages[i].naturalWidth === 0) {
                 this.cameraImages[i].src = this.cameraImages[i].src + '&time=2';
             }
-            //console.log("Câmera "+i+": "+this.cameraImages[i].complete);
         }
     }
-    
+
     previousState() {
         window.history.back();
     }

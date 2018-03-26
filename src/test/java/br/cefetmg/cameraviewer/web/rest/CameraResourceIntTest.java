@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Test class for the CameraResource REST controller.
  *
- * @see CameraResource, UserPermissionResource
+ * @see CameraResource
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CameraViewerApp.class)
