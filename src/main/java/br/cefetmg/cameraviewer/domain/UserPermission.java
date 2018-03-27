@@ -15,7 +15,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_permission")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class UserPermission implements Serializable {
+public class UserPermission implements Serializable, Comparable<UserPermission>  {
 
     private static final long serialVersionUID = 1L;
 
@@ -82,6 +82,11 @@ public class UserPermission implements Serializable {
         this.camerasThatHaveAccesses = cameras;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    @Override
+    public int compareTo(UserPermission u) {
+        return this.getUser().getLogin().compareTo(u.getUser().getLogin());
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -58,19 +58,7 @@ export class ScreenDetailComponent implements OnInit, OnDestroy {
                     this.cameraClass = 'col-sm-4';
                 }
             }
-            setInterval(this.verifyImages, 10000);
         });
-    }
-
-    verifyImages() {
-        const elements = document.getElementsByClassName('camera-img');
-        this.cameraImages = [];
-        for (let i = 0; i < elements.length; i++) {
-            this.cameraImages.push(elements[i] as HTMLImageElement);
-            if (!this.cameraImages[i].complete || this.cameraImages[i].naturalWidth === 0) {
-                this.cameraImages[i].src = this.cameraImages[i].src + '&time=2';
-            }
-        }
     }
 
     previousState() {

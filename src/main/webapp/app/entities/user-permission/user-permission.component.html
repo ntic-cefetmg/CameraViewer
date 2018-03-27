@@ -16,7 +16,6 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="cameraViewerApp.userPermission.user">User</span></th>
             <th><span jhiTranslate="cameraViewerApp.userPermission.camerasThatHaveAccess">Cameras That Have Access</span></th>
             <th></th>
@@ -24,7 +23,6 @@
             </thead>
             <tbody>
             <tr *ngFor="let userPermission of userPermissions ;trackBy: trackId">
-                <td><a [routerLink]="['../user-permission', userPermission.id ]">{{userPermission.id}}</a></td>
                 <td>
                     {{userPermission.user?.login}}
                 </td>

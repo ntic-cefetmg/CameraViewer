@@ -16,7 +16,6 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="cameraViewerApp.screen.description">Description</span></th>
             <th><span jhiTranslate="cameraViewerApp.screen.cameras">Cameras</span></th>
             <th></th>
@@ -24,8 +23,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let screen of screens ;trackBy: trackId">
-                <td><a [routerLink]="['../screen', screen.id ]">{{screen.id}}</a></td>
-                <td>{{screen.description}}</td>
+                <td><a [routerLink]="['../screen', screen.id ]">{{screen.description}}</a></td>
                 <td>
                     <span *ngFor="let cameras of screen.cameras; let last = last">
                             <a class="form-control-static" [routerLink]="['../camera', cameras?.id ]">{{cameras.description}}</a>{{last ? '' : ', '}}

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,8 +91,10 @@ public class UserPermissionResource {
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public List<UserPermission> getAllUserPermissions() {
+        List<UserPermission> userPermissions = userPermissionRepository.findAllWithEagerRelationships();
+        Collections.sort(userPermissions);
         log.debug("REST request to get all UserPermissions");
-        return userPermissionRepository.findAllWithEagerRelationships();
+        return userPermissions;
         }
 
     /**
