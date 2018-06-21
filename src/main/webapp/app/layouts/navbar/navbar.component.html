@@ -5,7 +5,7 @@
         </a>
         <a class="navbar-brand logo float-left" routerLink="/" (click)="collapseNavbar()">
             <span class="logo-img"></span>
-            <span jhiTranslate="global.title" class="navbar-title">CameraViewer</span> <span class="navbar-version">{{version}}</span>
+            <span jhiTranslate="global.title" class="navbar-title">CameraViewer</span> <span [hidden]="true" class="navbar-version">{{version}}</span>
         </a>
     </div>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
@@ -18,8 +18,26 @@
                     </span>
                 </a>
             </li>
+            <li class="nav-item" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                <a class="nav-link" routerLink="user-permission" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                    <span jhiTranslate="global.menu.entities.userPermission">User Permission</span>
+                </a>
+            </li>
+            <li *ngSwitchCase="true" class="nav-item">
+                <a class="nav-link" routerLink="camera" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                    <i class="fa fa-video-camera" aria-hidden="true"></i>
+                    <span jhiTranslate="global.menu.entities.camera">Camera</span>
+                </a>
+            </li>
+            <li *ngSwitchCase="true" class="nav-item">
+                <a class="nav-link" routerLink="screen" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                    <i class="fa fa-television" aria-hidden="true"></i>
+                    <span jhiTranslate="global.menu.entities.screen">Screen</span>
+                </a>
+            </li>
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" hidden>
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
                     <span>
                         <i class="fa fa-th-list" aria-hidden="true"></i>
@@ -29,6 +47,24 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu>
+                    <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                        <a class="dropdown-item" routerLink="user-permission" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.entities.userPermission">User Permission</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="camera" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.entities.camera">Camera</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="screen" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.entities.screen">Screen</span>
+                        </a>
+                    </li>
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                 </ul>
             </li>

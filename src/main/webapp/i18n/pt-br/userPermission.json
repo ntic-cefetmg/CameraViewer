@@ -1,0 +1,22 @@
+{
+    "cameraViewerApp": {
+        "userPermission" : {
+            "home": {
+                "title": "Permissões dos usuários",
+                "createLabel": "Criar nova Permissão",
+                "createOrEditLabel": "Criar ou editar Permissão"
+            },
+            "created": "Uma nova Permissão foi criado com o identificador {{ param }}",
+            "updated": "Uma Permissão foi atualizado com o identificador {{ param }}",
+            "deleted": "Uma Permissão foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir as Permissões de usuário {{ id }}?"
+            },
+            "detail": {
+                "title": "Permissões dos usuários"
+            },
+            "user": "Usuário",
+            "camerasThatHaveAccess": "Câmeras que tem acesso"
+        }
+    }
+}

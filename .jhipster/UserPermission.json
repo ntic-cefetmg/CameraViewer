@@ -1,0 +1,28 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "userPermission"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "usersWithAccess",
+            "relationshipName": "camerasThatHaveAccess",
+            "otherEntityName": "camera",
+            "otherEntityField": "description",
+            "ownerSide": true
+        }
+    ],
+    "fields": [],
+    "changelogDate": "20171119115836",
+    "entityTableName": "user_permission",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

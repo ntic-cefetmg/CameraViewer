@@ -1,0 +1,22 @@
+entity UserPermission
+
+entity Camera {
+	description String required,
+    accessURL String required
+}
+
+entity Screen {
+	description String required
+}
+
+relationship OneToOne {
+	UserPermission{user(login)} to User
+}
+
+relationship ManyToMany {
+	UserPermission{camerasThatHaveAccess(description)} to Camera{usersWithAccess(login)}
+}
+
+relationship ManyToMany {
+	Screen{cameras(description)} to Camera
+}

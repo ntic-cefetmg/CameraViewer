@@ -1,0 +1,22 @@
+{
+    "cameraViewerApp": {
+        "screen" : {
+            "home": {
+                "title": "Telas",
+                "createLabel": "Criar nova Tela",
+                "createOrEditLabel": "Criar ou editar Tela"
+            },
+            "created": "Uma nova Tela foi criada com o identificador {{ param }}",
+            "updated": "Uma Tela foi atualizada com o identificador {{ param }}",
+            "deleted": "Uma Tela foi deletada com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir a Tela {{ id }}?"
+            },
+            "detail": {
+                "title": "Tela"
+            },
+            "description": "Descrição",
+            "cameras": "Câmeras"
+        }
+    }
+}

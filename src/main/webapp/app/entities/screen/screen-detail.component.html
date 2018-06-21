@@ -1,0 +1,42 @@
+
+<div *ngIf="screen">
+    <h2>{{screen.description}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <div class="row" [ngClass]="generalClass">
+            <div [ngClass]="cameraClass" *ngFor="let camera of screen.cameras">
+                <img class="img-fluid camera-img" [src]="camera.accessURL" border="0" [alt]="camera.description">
+            </div>
+        </div>
+
+        <dt><span jhiTranslate="cameraViewerApp.screen.cameras">Cameras</span></dt>
+        <dd>
+            <span *ngFor="let cameras of screen.cameras; let last = last">
+                <a [routerLink]="['/camera', cameras?.id ]">{{cameras.description}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button *jhiHasAnyAuthority="'ROLE_ADMIN'"
+            type="button"
+            [routerLink]="['/', { outlets: { popup: 'screen/'+ screen.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
+
+<script>
+    $(function(){
+        $(".camera-img").each(function(){
+            $(this).remove();
+        });
+    });
+</script>
